@@ -1,0 +1,12 @@
+FROM node:15-alpine
+
+# set app basepath
+ENV HOME=/home/app
+
+# run app
+USER node
+WORKDIR $HOME
+
+EXPOSE 3000
+
+ENV NODE_ENV=production
