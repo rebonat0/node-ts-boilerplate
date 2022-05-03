@@ -3,17 +3,17 @@ version: '3'
 services:
   db:
     image: postgres
-    container_name: postgres-capitual
+    container_name: app-pg
     restart: always
     environment:
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_USER: "postgres"
-      POSTGRES_DB: "capitual_payment_service"
+      POSTGRES_DB: "app-pg"
     ports:
       - "5432:5432"
   redis:
     image: redis
-    container_name: redis-capitual
+    container_name: app-redis
     restart: always
     ports:
       - "6379:6379"
@@ -21,7 +21,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    container_name: microservice-capitual
+    container_name: boilerplate-app
     command: npm run dev
     ports:
       - "3000:3000"

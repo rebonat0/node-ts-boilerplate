@@ -15,5 +15,17 @@ model User {
   id            String  @id @default(uuid())
   firstName     String
   lastName      String
-  email         String   @db.VarChar(10)
+  email         String 
+
+  deleted       Boolean
+  deletedAt     DateTime
+  updatedAt     DateTime
+}
+
+model Business {
+  id            String  @id @default(uuid())
+
+  deleted       Boolean
+  deletedAt     DateTime
+  updatedAt     DateTime
 }

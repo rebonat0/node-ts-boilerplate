@@ -1,5 +1,5 @@
-import { User } from "@prisma/client";
+import { User } from '@prisma/client';
 
 export namespace UserTypes {
-    export type Filters = Omit<User, 'id'>;
+  export type Filters = Omit<User, 'id'>;
 }

@@ -1,50 +1,83 @@
 import { User } from '@prisma/client';
 import { Request, Response } from 'express';
 
-import { 
-    UserTypes,
+import {
+  UserTypes,
 } from '~/types';
 import {
-    PresenterFactory,
-    PaginationFactory
+  PresenterFactory,
+  PaginationFactory,
+  PaginatorFactory,
 } from '~/factory';
 import StatusCode from '~/helpers/statusCode';
-import { 
-    GetManyUserService,
-    GetUserByIdService,
-} from '~/services/user';
+import { GenericService } from '../services/generic/generic.service';
+import AppError from '~/exceptions/generic.exception';
 
-abstract class UserController {
-    public static async byId(req: Request, res: Response) {
-        const { id } = req.params;
+export class UserController {
+  public static service: GenericService<User> = new GenericService<User>('user');
 
-        const result = await GetUserByIdService.execute(id);
+  public static async byId(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
 
-        return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
+      const result = await UserController.service.getById(id);
+
+      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
+    } catch (err: any) {
+      if (err instanceof AppError) {
+        throw new AppError(err.message, err.statusCode);
+      }
+      throw new AppError(String(err), StatusCode.INTERNAL_SERVER_ERROR);
     }
+  }
 
-    public static async getMany(req: Request, res: Response) {
-        const { page, perPage, filters } = req.query;
+  public static async getMany(req: Request, res: Response) {
+    try {
+      const { page, perPage, filter } = req.query;
 
-        const query: UserTypes.Filters = !filters || filters === 'null' ? 
-            {} as UserTypes.Filters : 
-            filters as UserTypes.Filters;
+      const query: UserTypes.Filters = !filter || filter === 'null'
+        ? {} as UserTypes.Filters
+        : (filter as unknown) as UserTypes.Filters;
 
-        const pagination = {
-            page: page ? Number(page) : 1,
-            perPage: perPage ? Number(perPage) : 10,
-        };
+      const result = await UserController.service.getMany(
+        new PaginatorFactory<UserTypes.Filters>(
+          query,
+          page ? Number(page) : 1,
+          perPage ? Number(perPage) : 10,
+        ),
+      );
 
-        const result = await GetManyUserService.execute(query, pagination.page, pagination.perPage);
-
-        return res.status(StatusCode.OK).json(
-            new PresenterFactory<PaginationFactory<User>>(
-                new PaginationFactory<User>(result.users, pagination.page , pagination.perPage, result.total),
-                true,
-            ),
-        );
-
+      return res.status(StatusCode.OK).json(
+        new PresenterFactory<PaginationFactory<User>>(
+          new PaginationFactory<User>(
+            result.items,
+            page ? Number(page) : 1,
+            perPage ? Number(perPage) : 10,
+            result.total,
+          ),
+          true,
+        ),
+      );
+    } catch (err: any) {
+      if (err instanceof AppError) {
+        throw new AppError(err.message, err.statusCode);
+      }
+      throw new AppError(String(err), StatusCode.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  public static async destroy(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+
+      const result = await UserController.service.destroy(String(id), 'soft');
+
+      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
+    } catch (err: any) {
+      if (err instanceof AppError) {
+        throw new AppError(err.message, err.statusCode);
+      }
+      throw new AppError(String(err), StatusCode.INTERNAL_SERVER_ERROR);
+    }
+  }
 }
-
-export default UserController;

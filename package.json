@@ -19,7 +19,8 @@
     "postinstall": "cp -n envs/.env.local .env || true; prisma generate;",
     "migrate:init": "npx prisma migrate dev --name init",
     "docker:up": "docker-compose -f docker-compose.test.yml up -d",
-    "docker:down": "docker-compose down"
+    "docker:down": "docker-compose down",
+    "test": ""
   },
   "dependencies": {
     "@prisma/client": "^2.21.2",
