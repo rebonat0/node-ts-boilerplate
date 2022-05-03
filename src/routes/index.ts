@@ -3,10 +3,15 @@ import 'express-async-errors';
 
 import { PresenterFactory } from '~/factory';
 import AppError from '~/exceptions/generic.exception';
-import userRoutes from './user.routes';
 import StatusCode from '~/helpers/statusCode';
 
+// router_import
+
+import userRoutes from './user.routes';
+
 const router = e.Router();
+
+// router_usage
 
 router.use('/v1/users', userRoutes);
 

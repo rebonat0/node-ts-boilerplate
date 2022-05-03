@@ -1,0 +1,5 @@
+import { {{pascalCase name}} } from '@prisma/client';
+
+export namespace {{pascalCase name}}Types {
+  export type Filters = Omit<{{pascalCase name}}, 'id'>;
+}

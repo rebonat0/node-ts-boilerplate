@@ -29,3 +29,11 @@ model Business {
   deletedAt     DateTime
   updatedAt     DateTime
 }
+
+model Product {
+  id            String  @id @default(uuid())
+
+  deleted       Boolean
+  deletedAt     DateTime
+  updatedAt     DateTime
+}

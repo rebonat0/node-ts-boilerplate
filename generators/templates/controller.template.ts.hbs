@@ -1,0 +1,83 @@
+import { {{pascalCase name}} } from '@prisma/client';
+import { Request, Response } from 'express';
+
+import {
+  {{pascalCase name}}Types,
+} from '~/types';
+import {
+  PresenterFactory,
+  PaginationFactory,
+  PaginatorFactory,
+} from '~/factory';
+import StatusCode from '~/helpers/statusCode';
+import { GenericService } from '../services/generic/generic.service';
+import AppError from '~/exceptions/generic.exception';
+
+export class {{pascalCase name}}Controller {
+  public static service: GenericService<{{pascalCase name}}> = new GenericService<{{pascalCase name}}>('{{lowerCase name}}');
+
+  public static async byId(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+
+      const result = await {{pascalCase name}}Controller.service.getById(id);
+
+      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
+    } catch (err: any) {
+      if (err instanceof AppError) {
+        throw new AppError(err.message, err.statusCode);
+      }
+      throw new AppError(String(err), StatusCode.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  public static async getMany(req: Request, res: Response) {
+    try {
+      const { page, perPage, filter } = req.query;
+
+      const query: {{pascalCase name}}Types.Filters = !filter || filter === 'null'
+        ? {} as {{pascalCase name}}Types.Filters
+        : (filter as unknown) as {{pascalCase name}}Types.Filters;
+
+      const result = await {{pascalCase name}}Controller.service.getMany(
+        new PaginatorFactory<{{pascalCase name}}Types.Filters>(
+          query,
+          page ? Number(page) : 1,
+          perPage ? Number(perPage) : 10,
+        ),
+      );
+
+      return res.status(StatusCode.OK).json(
+        new PresenterFactory<PaginationFactory<{{pascalCase name}}>>(
+          new PaginationFactory<{{pascalCase name}}>(
+            result.items,
+            page ? Number(page) : 1,
+            perPage ? Number(perPage) : 10,
+            result.total,
+          ),
+          true,
+        ),
+      );
+    } catch (err: any) {
+      if (err instanceof AppError) {
+        throw new AppError(err.message, err.statusCode);
+      }
+      throw new AppError(String(err), StatusCode.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  public static async destroy(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+
+      const result = await {{pascalCase name}}Controller.service.destroy(String(id), 'soft');
+
+      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
+    } catch (err: any) {
+      if (err instanceof AppError) {
+        throw new AppError(err.message, err.statusCode);
+      }
+      throw new AppError(String(err), StatusCode.INTERNAL_SERVER_ERROR);
+    }
+  }
+}

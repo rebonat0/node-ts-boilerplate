@@ -20,6 +20,7 @@
     "migrate:init": "npx prisma migrate dev --name init",
     "docker:up": "docker-compose -f docker-compose.test.yml up -d",
     "docker:down": "docker-compose down",
+    "generate:module": "yarn plop --plopfile ./generators/module.plopfile.js",
     "test": ""
   },
   "dependencies": {
@@ -95,6 +96,7 @@
     "husky": "4.3.8",
     "jest": "^27.0.6",
     "nodemon": "^2.0.7",
+    "plop": "^3.1.0",
     "prisma": "^2.27.0",
     "semantic-release": "^17.4.3",
     "semantic-release-github-pr": "^6.0.1",

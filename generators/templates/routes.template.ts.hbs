@@ -1,0 +1,12 @@
+import { Router } from 'express';
+
+import { {{pascalCase name}}Controller } from '../controllers/{{lowerCase name}}.controller';
+
+const router = Router();
+
+router.get('/', {{pascalCase name}}Controller.getMany);
+router.get('/:id', {{pascalCase name}}Controller.byId);
+
+router.delete('/:id', {{pascalCase name}}Controller.destroy);
+
+export default router;
