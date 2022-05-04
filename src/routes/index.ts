@@ -7,7 +7,6 @@ import StatusCode from '~/helpers/statusCode';
 
 // router_import
 import userRoutes from './user.routes';
-
 const router = e.Router();
 
 // router_usage

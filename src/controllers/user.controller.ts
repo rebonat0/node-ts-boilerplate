@@ -83,7 +83,7 @@ export class UserController {
     }
   }
 
-  public static async create(req: Request, res: Response) {
+   public static async create(req: Request, res: Response) {
     try {
       const result = await CreateUserService.execute(req.body);
 
