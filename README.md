@@ -19,7 +19,7 @@
 1. Clone the Repo;
 2. Install development dependencies: `$ npm install`
 3. Run Docker Development mode: `$ docker-compose up -d`
-4. Enjoi!
+4. Enjoy!
 
 ## 💻  Getting Started without Docker (not recomended)
 
@@ -39,6 +39,7 @@ Run this commands from the project folder with `npm run "script-name"`.
 * `test`: run tests
 * `test:watch`: run tests in watch mode
 * `test:report`: run testsa and adds report file
+* `generate:module`: generate an new module on node on rails modee
 
 ## External typings augmentation
 This starter is already configured to allow you to extend typings of external packages. The logic behind it is based on [this](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-plugin-d-ts.html) official template. To augment a module, just create a folder with the same name as the module you are augmenting and add an index.d.ts in it. [Here](https://github.com/fox1t/fastify-websocket-router/tree/master/typings/fastify) you can find a real world example.
