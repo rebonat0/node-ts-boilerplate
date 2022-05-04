@@ -6,7 +6,8 @@ const router = Router();
 
 router.get('/', {{pascalCase name}}Controller.getMany);
 router.get('/:id', {{pascalCase name}}Controller.byId);
-
+router.post('/', {{pascalCase name}}Controller.create);
+router.put('/:id', {{pascalCase name}}Controller.update);
 router.delete('/:id', {{pascalCase name}}Controller.destroy);
 
 export default router;

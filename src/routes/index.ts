@@ -11,7 +11,7 @@ import userRoutes from './user.routes';
 const router = e.Router();
 
 // router_usage
-router.use('/v1/users', userRoutes);
+router.use('/v1/user', userRoutes);
 
 router.use(async (err: Error, _request: e.Request, response: e.Response, _: e.NextFunction) => {
   if (err instanceof AppError) {

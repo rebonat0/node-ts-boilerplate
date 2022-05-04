@@ -10,8 +10,10 @@ import {
   PaginatorFactory,
 } from '~/factory';
 import StatusCode from '~/helpers/statusCode';
-import { GenericService } from '../services/generic/generic.service';
+import { GenericService } from '~/services/generic/generic.service';
 import AppError from '~/exceptions/generic.exception';
+import { Update{{pascalCase name}}Service } from '~/services/{{lowerCase name}}/update.{{lowerCase name}}.service';
+import { Create{{pascalCase name}}Service } from '~/services/{{lowerCase name}}/create.{{lowerCase name}}.service';
 
 export class {{pascalCase name}}Controller {
   public static service: GenericService<{{pascalCase name}}> = new GenericService<{{pascalCase name}}>('{{lowerCase name}}');
@@ -71,6 +73,34 @@ export class {{pascalCase name}}Controller {
       const { id } = req.params;
 
       const result = await {{pascalCase name}}Controller.service.destroy(String(id), 'soft');
+
+      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
+    } catch (err: any) {
+      if (err instanceof AppError) {
+        throw new AppError(err.message, err.statusCode);
+      }
+      throw new AppError(String(err), StatusCode.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+   public static async create(req: Request, res: Response) {
+    try {
+      const result = await Create{{pascalCase name}}Service.execute(req.body);
+
+      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
+    } catch (err: any) {
+      if (err instanceof AppError) {
+        throw new AppError(err.message, err.statusCode);
+      }
+      throw new AppError(String(err), StatusCode.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  public static async update(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+
+      const result = await Update{{pascalCase name}}Service.execute(String(id), req.body);
 
       return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
     } catch (err: any) {

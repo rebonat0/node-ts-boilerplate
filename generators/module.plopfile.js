@@ -62,13 +62,13 @@ module.exports = function (plop) {
         {
           type: 'append',
           path: '../src/routes/index.ts',
-          pattern: new RegExp('//router_import'),
+          pattern: new RegExp('// router_import'),
           template: 'import {{lowerCase name}}Routes from \'./{{lowerCase name}}.routes\';',
         },
         {
           type: 'append',
           path: '../src/routes/index.ts',
-          pattern: new RegExp('//router_usage'),
+          pattern: new RegExp('// router_usage'),
           template: 'router.use(\'/v1/{{lowerCase name}}\', {{lowerCase name}}Routes);',
         },
       ],

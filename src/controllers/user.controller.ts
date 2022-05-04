@@ -10,8 +10,10 @@ import {
   PaginatorFactory,
 } from '~/factory';
 import StatusCode from '~/helpers/statusCode';
-import { GenericService } from '../services/generic/generic.service';
+import { GenericService } from '~/services/generic/generic.service';
 import AppError from '~/exceptions/generic.exception';
+import { UpdateUserService } from '~/services/user/update.user.service';
+import { CreateUserService } from '~/services/user/create.user.service';
 
 export class UserController {
   public static service: GenericService<User> = new GenericService<User>('user');
@@ -71,6 +73,34 @@ export class UserController {
       const { id } = req.params;
 
       const result = await UserController.service.destroy(String(id), 'soft');
+
+      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
+    } catch (err: any) {
+      if (err instanceof AppError) {
+        throw new AppError(err.message, err.statusCode);
+      }
+      throw new AppError(String(err), StatusCode.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  public static async create(req: Request, res: Response) {
+    try {
+      const result = await CreateUserService.execute(req.body);
+
+      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
+    } catch (err: any) {
+      if (err instanceof AppError) {
+        throw new AppError(err.message, err.statusCode);
+      }
+      throw new AppError(String(err), StatusCode.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  public static async update(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+
+      const result = await UpdateUserService.execute(String(id), req.body);
 
       return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
     } catch (err: any) {
