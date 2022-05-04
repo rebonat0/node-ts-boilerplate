@@ -19,7 +19,7 @@
 1. Clone the Repo;
 2. Install development dependencies: `$ npm install`
 3. Run Docker Development mode: `$ docker-compose up -d`
-4. Enjoi!
+4. Enjoy!
 
 ## 💻  Getting Started without Docker (not recomended)
 
