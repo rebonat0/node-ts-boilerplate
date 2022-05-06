@@ -24,6 +24,8 @@ model User {
 
 model Business {
   id            String  @id @default(uuid())
+  name          String
+
 
   deleted       Boolean
   deletedAt     DateTime
@@ -32,7 +34,8 @@ model Business {
 
 model Product {
   id            String  @id @default(uuid())
-
+  name          String
+  price         Int
   deleted       Boolean
   deletedAt     DateTime
   updatedAt     DateTime

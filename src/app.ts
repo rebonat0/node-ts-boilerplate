@@ -1,5 +1,6 @@
 import express from 'express';
 import 'make-promises-safe';
+import cors from 'cors';
 
 import helmetMiddleware from './middlewares/helmet';
 import morganMiddleware from './middlewares/morgan';
@@ -12,6 +13,7 @@ const app = express();
 // own express modules
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // middlewares
 morganMiddleware.setup(app);
