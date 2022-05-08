@@ -24,7 +24,7 @@ export class {{pascalCase name}}Controller {
 
       const result = await {{pascalCase name}}Controller.service.getById(id);
 
-      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
+      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true, 'SUCCESS'));
     } catch (err: any) {
       if (err instanceof AppError) {
         throw new AppError(err.message, err.statusCode);
@@ -58,6 +58,7 @@ export class {{pascalCase name}}Controller {
             result.total,
           ),
           true,
+          'SUCCESS'
         ),
       );
     } catch (err: any) {
@@ -74,7 +75,7 @@ export class {{pascalCase name}}Controller {
 
       const result = await {{pascalCase name}}Controller.service.destroy(String(id), 'soft');
 
-      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
+      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true, 'SUCCESS'));
     } catch (err: any) {
       if (err instanceof AppError) {
         throw new AppError(err.message, err.statusCode);
@@ -87,7 +88,7 @@ export class {{pascalCase name}}Controller {
     try {
       const result = await Create{{pascalCase name}}Service.execute(req.body);
 
-      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
+      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true, 'SUCCESS'));
     } catch (err: any) {
       if (err instanceof AppError) {
         throw new AppError(err.message, err.statusCode);
@@ -102,7 +103,7 @@ export class {{pascalCase name}}Controller {
 
       const result = await Update{{pascalCase name}}Service.execute(String(id), req.body);
 
-      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true));
+      return res.status(StatusCode.OK).json(new PresenterFactory<typeof result>(result, true, 'SUCCESS'));
     } catch (err: any) {
       if (err instanceof AppError) {
         throw new AppError(err.message, err.statusCode);
