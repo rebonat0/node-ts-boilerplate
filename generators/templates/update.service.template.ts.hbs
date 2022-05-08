@@ -12,7 +12,7 @@ export class Update{{pascalCase name}}Service {
                 where: {
                     id,
                 },
-                data: { ...dto },
+                data: { ...dto, updatedAt: new Date() },
             });
 
             return result;

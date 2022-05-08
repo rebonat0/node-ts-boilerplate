@@ -17,9 +17,10 @@ model User {
   lastName      String
   email         String 
 
-  deleted       Boolean
-  deletedAt     DateTime
-  updatedAt     DateTime
+  deleted       Boolean? @default(false)
+  createdAt      DateTime  @default(now())
+  deletedAt     DateTime?
+  updatedAt     DateTime? @default(now())
 }
 
 model Business {
@@ -27,16 +28,18 @@ model Business {
   name          String
 
 
-  deleted       Boolean
-  deletedAt     DateTime
-  updatedAt     DateTime
+  deleted       Boolean? @default(false)
+  createdAt      DateTime  @default(now())
+  deletedAt     DateTime?
+  updatedAt     DateTime? @default(now())
 }
 
 model Product {
   id            String  @id @default(uuid())
   name          String
   price         Int
-  deleted       Boolean
-  deletedAt     DateTime
-  updatedAt     DateTime
+  deleted       Boolean? @default(false)
+  createdAt      DateTime  @default(now())
+  deletedAt     DateTime?
+  updatedAt     DateTime? @default(now())
 }
